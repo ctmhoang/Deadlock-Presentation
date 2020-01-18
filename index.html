@@ -8,7 +8,8 @@
 <meta name="format-detection" content="telephone=no" />
 <!-- Keeps the logical window size used when displaying a page mobile browsers -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<link rel="icon" type="image/png" sizes="192x192"  href="img/duke/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="img/duke/favicon-32x32.png">
 <!-- Provide a short description of the page. -->
 <meta name="description" content="Deadlock Presentation ">
 <!-- This meta tag tells Google not to show the sitelinks search box. -->
@@ -350,8 +351,7 @@ do {
       </section>
       <section>
         <h3>Deadlock Prevention: Negate 1 of 4</h3>
-          <p><strong>
-#3 No preemption</strong></p>
+        <p><strong> #3 No preemption</strong></p>
         <ol>
           <strong>Allow runtime system to pre-empt:</strong>
           <li>Requesting processes’ resources if all not available</li>
@@ -369,7 +369,7 @@ do {
         <h3>Deadlock Prevention: Negate 1 of 4</h3>
         <p><strong>#
           4 Circular Wait</strong></p>
-          <ul>
+        <ul>
           <li>Single lock for entire system?</li>
           <li>Impose partial ordering on resources,
             request in order</li>
@@ -460,85 +460,94 @@ def eat():
           <li>System has at least one deadlock</li>
         </ul>
       </section>
-        <section>
+      <section>
         <h3>Possible System States</h3>
         <img src="img/Sysstate.png" alt=""></section>
     </section>
+    <section>
       <section>
+        <h3>Safe State</h3>
+        <ul class="small-font">
+          <li>A state is said to be safe , if there exists a sequence of
+            processes [P1 , P2 ,…, Pn ] such that for each P i the
+            resources that P i can still request can be satisfied by the
+            currently available resources plus the resources held by
+            all P j where j &lt; i</li>
+          <li>State is safe b/c OS can definitely avoid deadlock
+            <ul>
+              <li>block new requests until safe order is executed</li>
+            </ul>
+          </li>
+          <li>Avoids circular wait condition
+            <ul>
+              <li>Process waits until safe state is guaranteed</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
       <section>
-          <h3>Safe State</h3>
-          <ul class="small-font">
-              <li>A state is said to be safe , if there exists a sequence of
-processes [P1 , P2 ,…, Pn ] such that for each P i the
-resources that P i can still request can be satisfied by the
-currently available resources plus the resources held by
-all P j where j &lt; i</li>
-              <li>State is safe b/c OS can definitely avoid deadlock
-              <ul>
-                  <li>block new requests until safe order is executed</li>
-              </ul></li>
-              <li>Avoids circular wait condition
-              <ul>
-                  <li>Process waits until safe state is guaranteed</li>
-              </ul></li>
-          </ul>
-          </section>
-          <section>
-          <h3>Safe State Example</h3>
-              <p class="small-font">Suppose: 12 tape drives and 3 processes: p0, p1, and p2</p>
-              <table>
-              <tr class="small-font"><th></th>
-              <th>max need</th>
-              <th>current usage</th>
-              <th>could still
-ask for</th></tr>
-                  <tr>
-                      <td>p0</td>
-                      <td>10</td>
-                      <td>5</td>
-                      <td>5</td>
-                  </tr>
-                  <tr>
-                      <td>p1</td>
-                      <td>4</td>
-                      <td>2</td>
-                      <td>2</td>
-                  </tr>
-                  <tr>
-                      <td>p2</td>
-                      <td>9</td>
-                      <td>2</td>
-                      <td>7</td>
-                  </tr>
-              </table>
-              <p class="fragment small-font">3 drives remain</p>
-              <p class="fragment small-font">Current state is safe because a safe sequence exists: [p1, p0, p2]</p>
-              <ul class="fragment small-font">
-                  <li>p1 can complete with remaining resources</li>
-                  <li>p0 can complete with remaining+p1</li>
-                  <li>p2 can complete with remaining+p1+p0</li>
-              </ul>
-              <p class="fragment small-font"><em>What if p2 requests 1 drive? Grant or not?</em></p>
-          </section>
-          <section>
-          <h3>Banker’s Algorithm</h3>
-              <p>from 10,000 feet:</p>
-          <ul><li>Process declares its worst case needs, asks
-for what it “really” needs, a little at a time</li>
-          <li>Algorithm decides when to grant requests <ul>
+        <h3>Safe State Example</h3>
+        <p class="small-font">Suppose: 12 tape drives and 3 processes: p0, p1, and p2</p>
+        <table>
+          <tr class="small-font">
+            <th></th>
+            <th>max need</th>
+            <th>current usage</th>
+            <th>could still
+              ask for</th>
+          </tr>
+          <tr>
+            <td>p0</td>
+            <td>10</td>
+            <td>5</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>p1</td>
+            <td>4</td>
+            <td>2</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>p2</td>
+            <td>9</td>
+            <td>2</td>
+            <td>7</td>
+          </tr>
+        </table>
+        <p class="fragment small-font">3 drives remain</p>
+        <p class="fragment small-font">Current state is safe because a safe sequence exists: [p1, p0, p2]</p>
+        <ul class="fragment small-font">
+          <li>p1 can complete with remaining resources</li>
+          <li>p0 can complete with remaining+p1</li>
+          <li>p2 can complete with remaining+p1+p0</li>
+        </ul>
+        <p class="fragment small-font"><em>What if p2 requests 1 drive? Grant or not?</em></p>
+      </section>
+      <section>
+        <h3>Banker’s Algorithm</h3>
+        <p>from 10,000 feet:</p>
+        <ul>
+          <li>Process declares its worst case needs, asks
+            for what it “really” needs, a little at a time</li>
+          <li>Algorithm decides when to grant requests
+            <ul>
               <li>Build a graph assuming request granted</li>
               <li>Reducible? yes: grant request, no: wait</li>
-          </ul></li></ul>
-              <ul>
-                  <strong>Problems:</strong>
-              <li>Fixed number of processes</li>
-              <li>Need worst case needs ahead of time</li>
-              <li>Expensive</li></ul>
-          </section>
-          <section>
-          <h3>Wanna implement it?</h3>
-              <p>Here is pseudo code 😎</p>
-              <pre><code class="hljs">[Avail] = [FreeResources] 
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <strong>Problems:</strong>
+          <li>Fixed number of processes</li>
+          <li>Need worst case needs ahead of time</li>
+          <li>Expensive</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Wanna implement it?</h3>
+        <p>Here is pseudo code 😎</p>
+        <pre><code class="hljs">[Avail] = [FreeResources] 
     Add all nodes to UNFINISHED 
     do {
         done = true
@@ -552,94 +561,100 @@ for what it “really” needs, a little at a time</li>
     } until(done)
 
               </code></pre>
-          </section>
-          <section>
-          <h3>Banker’s Algorithm (less conservative)</h3>
-              <ul>
-                  <li>Allocate resources dynamically
-</li>
-                  <li>Keeps system in a “SAFE” state</li>
-                  <li>Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources
-</li>
-              </ul>
-          </section>
-          <section>
-          <h3>Banker’s Algorithm Example</h3>
-              <img src="img/Banker.png" alt="">
-              <article class="small-font">
-              <h4>Feeding Philosophers</h4>
-                  <ul>
-                      <li><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
-                      <ul>
-                          <li>Not last chopstick</li>
-                          <li>Is last chopstick but someone will have two afterwards</li>
-                      </ul></li>
-                      <li><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
-                  </ul>
-              </article>
-          </section>
-          <section>
-          <h3>Why would we not told them?</h3>
-              <ul><li class="fragment"><strong>Break out:</strong> detect the deadlock cycle and forcibly take away a resource from a thread to break it.</li>
-                      <li class="fragment"><strong>Don’t make multiple independent requests:</strong> grab both chopsticks at once.</li></ul>
-              <p class="fragment">Requires a new mechanism.</p>
-          </section>
       </section>
       <section>
-      <section><h3>Reactive
-Responses to Deadlocks</h3>
-          <blockquote>If neither avoidance or prevention is
-implemented, deadlocks can (and will)
-occur. Now what?</blockquote> <p>Detect &amp; Recover</p></section>
+        <h3>Banker’s Algorithm (less conservative)</h3>
+        <ul>
+          <li>Allocate resources dynamically </li>
+          <li>Keeps system in a “SAFE” state</li>
+          <li>Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources </li>
+        </ul>
+      </section>
       <section>
-          <h3>Deadlock
-Detection</h3>
+        <h3>Banker’s Algorithm Example</h3>
+        <img src="img/Banker.png" alt="">
+        <article class="small-font">
+          <h4>Feeding Philosophers</h4>
           <ul>
-              <li>Track resource allocation (who has what)</li>
-              <li>Track pending requests (who’s waiting for what)</li>
+            <li><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
+              <ul>
+                <li>Not last chopstick</li>
+                <li>Is last chopstick but someone will have two afterwards</li>
+              </ul>
+            </li>
+            <li><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
           </ul>
-          <ul class="small-font">When should we run this?
+        </article>
+      </section>
+      <section>
+        <h3>Why would we not told them?</h3>
+        <ul>
+          <li class="fragment"><strong>Break out:</strong> detect the deadlock cycle and forcibly take away a resource from a thread to break it.</li>
+          <li class="fragment"><strong>Don’t make multiple independent requests:</strong> grab both chopsticks at once.</li>
+        </ul>
+        <p class="fragment">Requires a new mechanism.</p>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Reactive
+          Responses to Deadlocks</h3>
+        <blockquote>If neither avoidance or prevention is
+          implemented, deadlocks can (and will)
+          occur. Now what?</blockquote>
+        <p>Detect &amp; Recover</p>
+      </section>
+      <section>
+        <h3>Deadlock
+          Detection</h3>
+        <ul>
+          <li>Track resource allocation (who has what)</li>
+          <li>Track pending requests (who’s waiting for what)</li>
+        </ul>
+        <ul class="small-font">
+          When should we run this?
           <li>For each request?</li>
           <li>After each unsatisfiable request?</li>
           <li>Hourly?</li>
           <li>Once CPU utilization drops below a threshold?</li>
-          <li>Some combination of these?</li></ul>
-          </section>
-          <section>
-          <h3>Deadlock
-Recovery</h3>
-              <p>Blue screen &amp; reboot?</p>
-              <ul>Kill one/all deadlocked processes
-                  <li>Pick a victim</li>
-                  <li>Terminate</li>
-                  <li>Repeat if needed</li>
-              </ul>
-              <ul>Preempt resource/processes till deadlock broken
-                  <li>Pick a victim (# resources held, execution time)</li>
-                  <li>Rollback (partial or total, not always possible)</li>
-                  <li>Starve (prevent process from being executed)</li>
-              </ul>
-          </section>
-          <section><h2>Summary</h2>
-          <ul>
-              <em>Prevent</em>
-              <li>Negate one of the four necessary conditions.</li>
-              <em>Avoid</em>
-              <li>Schedule processes really carefully (?)</li>
-              <em>Detect</em>
-              <li>Determine if a deadlock has occurred</li>
-              <em>Recover</em>
-              <li>Kill or rollback</li>
-          </ul>
-          </section>
+          <li>Some combination of these?</li>
+        </ul>
       </section>
-      <section style="text-align: left;" data-background="#018383" data-background-transition="slide" data-transition="zoom">
-                <h3>Thank you for comming</h3>
-    
-                <p>
-                    <small><a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a>  , Hoang Le, Hai Nguyen, Thanh Nguyen, Tue Nguyen</small>
-                </p>
-            </section>
+      <section>
+        <h3>Deadlock
+          Recovery</h3>
+        <p>Blue screen &amp; reboot?</p>
+        <ul>
+          Kill one/all deadlocked processes
+          <li>Pick a victim</li>
+          <li>Terminate</li>
+          <li>Repeat if needed</li>
+        </ul>
+        <ul>
+          Preempt resource/processes till deadlock broken
+          <li>Pick a victim (# resources held, execution time)</li>
+          <li>Rollback (partial or total, not always possible)</li>
+          <li>Starve (prevent process from being executed)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Summary</h2>
+        <ul>
+          <em>Prevent</em>
+          <li>Negate one of the four necessary conditions.</li>
+          <em>Avoid</em>
+          <li>Schedule processes really carefully (?)</li>
+          <em>Detect</em>
+          <li>Determine if a deadlock has occurred</li>
+          <em>Recover</em>
+          <li>Kill or rollback</li>
+        </ul>
+      </section>
+    </section>
+    <section style="text-align: left;" data-background="#018383" data-background-transition="slide" data-transition="zoom">
+      <h3>Thank you for comming</h3>
+      <p> <small><a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a> , Hoang Le, Hai Nguyen, Thanh Nguyen, Tue Nguyen</small> </p>
+    </section>
   </div>
 </div>
 <script src="js/reveal.js"></script> 
