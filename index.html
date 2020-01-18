@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DeadLock</title>
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!-- Specify whether or not telephone numbers in the HTML content should appear as hypertext links -->
+<meta name="format-detection" content="telephone=no" />
+<!-- Keeps the logical window size used when displaying a page mobile browsers -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- Provide a short description of the page. -->
+<meta name="description" content="This is an my project in Intro to web dev">
+<!-- This meta tag tells Google not to show the sitelinks search box. -->
+<meta name="google" content="nositelinkssearchbox" />
+<!-- Control the behavior of search engine crawling and indexing. 
+ The robots meta tag applies to all search engines, while the "googlebot" meta tag is specific to Google. -->
+<meta name="robots" content="..., ..." />
+<meta name="http-equiv" content="X-Robots-Tag : noindex, follow" />
+<meta name="googlebot" content="..., ..." />
+<!-- Used for verifying ownership of a site. -->
+<meta name="verify" content="Cameron"/>
+<!-- Defines the language, American English is the default. -->
+<meta property="og:locale" content="en-IN">
+<!-- Name of the author of the document -->
+<meta name="author" content="Cameron Hoang"/>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/night.css"
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="lib/css/monokai.css">
+<!-- Printing and PDF exports --> 
+<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h1>Topic: Deadlocks</h1>
+      <h3> Team 4: Tuan Hoang, Hoang Le, Hai Nguyen, Thanh Nguyen.</h3>
+      <p><small>Created with 💖 by <a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a></small></p>
+    </section>
+    <section>
+      <section>
+        <h2>Locking Multiple Resources</h2>
+        <ul>
+          <li class = "fragment">Locks protect access to shared resources.</li>
+          <li class = "fragment">Threads may need multiple shared resources to perform some operation.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Ensuring Progress</h3>
+        <ul>
+          <li class="fragment">Schedulers try to schedule jobs efficiently </li>
+          <li class="fragment">Assume that the threads make progress. </li>
+          <li class="fragment">If they are all just waiting for each other or spinning in loops, the scheduler cannot help much. </li>
+        </ul>
+        <p class="fragment"> Let’s see what sorts of problems we might fall into and how to avoid them </p>
+      </section>
+      <section data-markdown>
+        <h3>Dining Philosophers <small>[Dijkstra 68]</small></h3>
+        <script class = "col-6" type="text/template">
+            ### Consider e have a psudo code below:
+```
+class Philosopher:
+chopsticks[N] = [Semaphore(1),…]
+def __init__(mynum)
+    self.id = mynum
+def eat():
+    right = self.id
+    left = (self.id +1 ) % N
+while True:
+    P(chopsticks[left])
+    P(chopsticks[right])
+    # om nom nom
+    V(chopsticks[right])
+    V(chopsticks[left])
+```
+            </script> 
+      </section>
+      <section>
+        <h3>Let's delve into it</h3>
+        <div class="container">
+          <div class="col-6">
+            <ul>
+              <li> Philosophers go out for Chinese food </li>
+              <li>Need exclusive access to 2 chopsticks to eat food</li>
+              <ul class="small-font">
+                <li>N processes share N resources </li>
+                <li>resource requests occur in pairs</li>
+                <li>random think times</li>
+                <li>hungry philosopher grabs a fork</li>
+                <li>...and doesn’t let go</li>
+                <li>...until the other fork is free</li>
+                <li>...and the linguine is eaten</li>
+              </ul>
+            </ul>
+          </div>
+          <div class="col-6"> <img class="no-border" src="img/table.png" alt="Illustration Picture"></div>
+        </div>
+      </section>
+      <section>
+        <h3> Deadlock happens </h3>
+        <article> Deadlock occurs when a thread or set of threads are waiting for each other to finish and thus nobody ever does. </article>
+      </section>
+      <section>
+        <h3>Self Deadlock</h3>
+        <article>
+          <h4>A single thread can deadlock. How?</h4>
+          <small>Thread A acquires Resource 1. Thread A tries to reacquire Resource 1. </small>
+          <h4>This seems inane. Why would this happen?</h4>
+          <small>foo() needs Resource 1. bar() needs Resource 1. While locking Resource 1 foo() calls bar(). </small>
+          <h4>Can we solve this problem?</h4>
+          <small>Yes! Recursive locks. Allow a thread to reacquire a lock that it already holds, as long as calls to acquire are matched by calls to release.
+          This kind of problem is not uncommon</small></article>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Example: Single-Lane Bridge Crossing</h3>
+        <figure> <img src="img/CA.png" alt="Bridge in Yosemite National Park"
+                      width="70%">
+          <figcaption>CA 140 to Yosemite National Park </figcaption>
+        </figure>
+      </section>
+      <section>
+        <h3>Bridge Crossing Example</h3>
+        <img src="img/BridProbs.png" alt="">
+        <ul class="small-font">
+          <li>Each segment of road can be viewed as a resource
+            <ul>
+              <li>Car must own the segment under them </li>
+              <li>Must acquire segment that they are moving into </li>
+            </ul>
+          </li>
+          <li>Deadlock: Two cars in opposite directions meet in middle </li>
+          <li>Resolving deadlock: “Preempt” road segment, force one car (or several cars) to back up </li>
+          <li>Prevent deadlock: make sure cars facing opposite directions don’t enter the bridge simultaneously </li>
+          <li>Starvation (not deadlock): Eastbound traffic doesn’t stop for westbound traffic </li>
+        </ul>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Necessary Conditions for Deadlock</h3>
+        <p>A deadlock cannot occur unless all of the following conditions are met: </p>
+        <ol>
+          <li>Acquire can block invoker.(Protect Access)</li>
+          <li>Hold &amp; wait. A process can be blocked while
+            holding resources. (Multiple independent requests)</li>
+          <li>No resources preemption. Allocated resources cannot
+            be reclaimed. Explicit release operation
+            needed.</li>
+          <li>Circular waits are possible.<br>
+            <small>Let p -&gt; q denote <q>p waits for q to release a resource</q>. Then
+            P1 -&gt; P2 -&gt;…  Pn -&gt; P1</small></li>
+        </ol>
+      </section>
+    </section>
+  </div>
+</div>
+<script src="js/reveal.js"></script> 
+<script>
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+</body>
+</html>
