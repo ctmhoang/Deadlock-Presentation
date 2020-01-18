@@ -108,6 +108,15 @@ while True:
         </div>
       </section>
       <section>
+        <h3>Starvation vs. Deadlock</h3>
+        <p>Starvation:
+          thread waits indefinitely</p>
+        <p>Deadlock:
+          circular waiting for resources</p>
+        <p>Deadlock
+          ⇒starvation, but not vice versa</p>
+      </section>
+      <section>
         <h3> Deadlock happens </h3>
         <article> Deadlock occurs when a thread or set of threads are waiting for each other to finish and thus nobody ever does. </article>
       </section>
@@ -147,6 +156,16 @@ while True:
           <li>Starvation (not deadlock): Eastbound traffic doesn’t stop for westbound traffic </li>
         </ul>
       </section>
+      <section>
+        <h3>Deadlock with Locks</h3>
+        <img src="img/Thread.png" alt="">
+        <ul class="small-font">
+          <li>Thread 1 and Thread 2 both need two locks, but grab them in different orders </li>
+          <li>Under what conditions does deadlock occur? </li>
+          <li>Why might this code run many times with no problem? </li>
+          <li>How do you fix it? </li>
+        </ul>
+      </section>
     </section>
     <section>
       <section>
@@ -160,11 +179,470 @@ while True:
             be reclaimed. Explicit release operation
             needed.</li>
           <li>Circular waits are possible.<br>
-            <small>Let p -&gt; q denote <q>p waits for q to release a resource</q>. Then
-            P1 -&gt; P2 -&gt;…  Pn -&gt; P1</small></li>
+            <small>Let p ⇒ q denote <q>p waits for q to release a resource</q>. Then
+            P1 ⇒ P2 ⇒ … Pn ⇒ P1</small></li>
         </ol>
       </section>
+      <section>
+        <h3>Is this a Deadlock?</h3>
+        <p> Truck A has to wait for Truck B to move </p>
+        <img src="img/isdeadlock1.png" alt=""> </section>
+      <section>
+        <h3>Is this a Deadlock?</h3>
+        <p>Gridlock</p>
+        <img src="img/08-deadlocks.jpg" alt=""> </section>
+      <section>
+        <h3>Is this a Deadlock?</h3>
+        <img src="img/09-deadlocks.jpg" alt=""> </section>
+      <section>
+        <h3>Is this a Deadlock?</h3>
+        <img src="img/10-deadlocks.jpg" alt=""> </section>
     </section>
+    <section>
+      <section>
+        <h2>Deadlock Detection</h2>
+        <div class="container">
+          <ul class="col-9">
+            Create a Wait
+            For Graph
+            <li>1 Node per Process</li>
+            <li>1 Edge per Waiting Process, P
+              (from P to the process it’s waiting for)</li>
+          </ul>
+          <img class="col-3" src="img/Graph.png" alt=""> </div>
+        <p>Note:
+          graph holds for a single instan ce in time</p>
+        <p>Cycles
+          in graph indicate deadlock</p>
+      </section>
+      <section>
+        <h3>Deadlock Detection Algorithm</h3>
+        <ul>
+          <li>Only one of each type of resource ⇒ look for loops </li>
+          <li>More General Deadlock Detection Algorithm
+            <ul>
+              <li>Let [X] represent an m-ary vector of non-negative
+                integers (quantities of resources of each type):
+                <pre><code class="hljs-doctag">
+[FreeResources]: 	Current free resources each type
+[RequestX]:	Current requests from thread X
+[AllocX]:	Current resources held by thread X
+                </code></pre>
+              </li>
+              <li>See if tasks can eventually terminate on their own</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <div class="container">
+          <pre class="col-6"><code class="hljs">
+[Avail] = [FreeResources]
+Add all nodes to UNFINISHED
+do {
+    done = true
+    Foreach node in UNFINISHED {
+        if ([Requestnode] &lt;= [Avail]) {
+        remove node from UNFINISHED
+        [Avail] = [Avail] + [Allocnode]
+        done = false
+        }
+    }
+} until(done)
+            </code></pre>
+          <img class="col-6" src="img/grapDec.png" style="margin: 30px" alt=""> </div>
+        <p>• Nodes left in UNFINISHED ⇒ deadlocked </p>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3><small>Question #1</small><br>
+          Does order of reduction matter?</h3>
+        <p><strong>Answer: No.</strong></p>
+        <article><strong>Explaination: </strong>an unchosen candidate at one
+          step remains a candidate for later steps.
+          Eventually regardless of order every node
+          will be reduced.</article>
+      </section>
+      <section>
+        <h3><small>Question #2</small><br>
+          If a system is deadlocked, could the deadlock go
+          away on its own?</h3>
+        <p><strong>Answer: No,</strong> unless someone kills one of the threads or
+          something causes a process to release a resource.</p>
+        <article class="small-font">Many real systems put time limits on
+          “waiting” precisely for this reason. When a process gets a
+          timeout exception, it gives up waiting; this can eliminate
+          the deadlock. <br>
+          Process may be forced to terminate itself because often,
+          if a process can’t get what it needs, there are no other
+          options available!</article>
+      </section>
+      <section>
+        <h3><small>Question #3</small><br>
+          Suppose a system isn’t deadlocked at time T.
+          Can we assume it will still be free of deadlock at
+          time T+1?</h3>
+        <p><strong>Answer: No !!!</strong></p>
+        <article> Explanation:
+          the very next thing it might do
+          is to run some process that will request a
+          resource…<br>
+          … establishing a cyclic wait<br>
+          … and causing deadlock </article>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Proactive
+          Responses to Deadlocks</h3>
+        <ul>
+          <em>Let’s not deadlock, okay?</em>
+          <li><strong>Deadlock Prevention:</strong> make it impossible
+            <ul>
+              <li>Prevent 1 of the 4 necessary conditions from
+                arising ……. disaster averted!</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Deadlock Prevention: Negate 1 of 4</h3>
+        <ul>
+          <strong>#1 Mutual exclusion / Bounded Resources</strong>
+          <li>Make resources sharable without locks?</li>
+          <li>Make more resources available?</li>
+          <li>Not always possible ( e.g., printers)</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Deadlock Prevention: Negate 1 of 4</h3>
+        <p><strong>#
+          2 Hold and wait</strong></p>
+        <ul class="small-font">
+          Don’t hold resources when waiting for another
+          <li> Re write code:
+            <div class="container">
+              <pre class="col-6"><code class="hljs">Module:: foo()
+    lock.acquire();
+    doSomeStuff();
+    otherModule --&gt; bar();
+    doOtherStuff();
+    lock.release();}</code></pre>
+              <pre class="col-6"><code class="hljs">Module:: foo()
+    doSomeStuff();
+    otherModule--&gt; bar();
+    doOtherStuff();
+}
+                  </code></pre>
+            </div>
+          </li>
+          <li>Request all resources before execution begins
+            <ul>
+              <li>Processes don’t know what they need ahead of time</li>
+              <li>Starvation (if waiting on many popular resources)</li>
+              <li>Low utilization (need resource only for a bit)</li>
+            </ul>
+          </li>
+        </ul>
+        <p class="small-font">Optimization: Release all resources before requesting
+          anything new? Still has last two problems 😞</p>
+      </section>
+      <section>
+        <h3>Deadlock Prevention: Negate 1 of 4</h3>
+          <p><strong>
+#3 No preemption</strong></p>
+        <ol>
+          <strong>Allow runtime system to pre-
+          empt:</strong>
+          <li>Requesting processes’ resources if all not available</li>
+          <li>Resources of waiting processes to satisfy request</li>
+        </ol>
+        <ul>
+          Good when easy to save
+          restore state of resource
+          <li>CPU registers</li>
+          <li>memory virtualization (page memory to disk, maybe
+            even page tables)</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Deadlock Prevention: Negate 1 of 4</h3>
+        <p><strong>#
+          4 Circular Wait</strong></p>
+          <ul>
+          <li>Single lock for entire system?</li>
+          <li>Impose partial ordering on resources,
+            request in order</li>
+        </ul>
+        <p><em>Intuition:</em> Cycle requires an edge from low to
+          high, and from high to low numbered node, or
+          to same node</p>
+        <img src="img/Locks.png" alt=""> </section>
+      <section>
+        <h3>Preventing Dining Philosophers Deadlock?</h3>
+        <div class="container">
+          <pre class="col-6"><code class="hljs">class Philosopher:
+    chopsticks[N] = [Semaphore(1),…]
+def __init__(mynum)
+    self.id = mynum
+def eat():
+    right = self.id % N
+    left = (self.id+ 1 ) % N
+    while True:
+        P(left)
+        P(right)
+        # om nom nom
+        V(right)
+        V(left)
+            </code></pre>
+          <div class="col-6" style="margin-left: 13px">
+            <ol class="small-font">
+              <li>Bounded Resources</li>
+              <li>Hold &amp; Wait</li>
+              <li>No Pre-emption</li>
+              <li>Circular Wait</li>
+            </ol>
+            <p>Can we prevent one of
+              these conditions?
+              Ideas?</p>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h3>Proactive
+          Responses to Deadlocks</h3>
+        <ul>
+          <em>Let’s not deadlock, okay?</em>
+          <li><strong>Deadlock Prevention:</strong> make it impossible
+            <ul>
+              <li>Prevent 1 of the 4 necessary conditions from
+                arising ……. disaster averted!</li>
+            </ul>
+          </li>
+          <li><strong>Deadlock Avoidance:</strong> make it not happen
+            <ul>
+              <li>Think before you act</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h3>Deadlock Avoidance</h3>
+        <ul>
+          How do cars do it?
+          <li>Try not to block an intersection</li>
+          <li>Don’t drive into the intersection if you can see
+            that you’ll be stuck there.</li>
+        </ul>
+        <ul>
+          Why does this work?
+          <li>Prevents a wait for relationship</li>
+          <li>Cars won’t take up a resource if they see they
+            won’t be able to acquire the next one…</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Deadlock Dynamics</h3>
+        <ul class="small-font">
+          <strong>Safe state:</strong>
+          <li>It is possible to avoid deadlock and eventually grant all
+            resource requests by careful scheduling</li>
+          <li>May require delaying a resource request even when resources
+            are available! </li>
+          <strong>Unsafe state:</strong>
+          <li>Some sequence of resource requests can result in deadlock
+            even with careful scheduling</li>
+          <strong>Doomed state:</strong>
+          <li>All possible computations lead to deadlock</li>
+          <strong>Deadlocked state:</strong>
+          <li>System has at least one deadlock</li>
+        </ul>
+      </section>
+        <section>
+        <h3>Possible System States</h3>
+        <img src="img/Sysstate.png" alt=""></section>
+    </section>
+      <section>
+      <section>
+          <h3>Safe State</h3>
+          <ul class="small-font">
+              <li>A state is said to be safe , if there exists a sequence of
+processes [P 1 , P 2 ,…, P n ] such that for each P i the
+resources that P i can still request can be satisfied by the
+currently available resources plus the resources held by
+all P j where j &lt; i</li>
+              <li>State is safe b/c OS can definitely avoid deadlock
+              <ul>
+                  <li>block new requests until safe order is executed</li>
+              </ul></li>
+              <li>Avoids circular wait condition
+              <ul>
+                  <li>Process waits until safe state is guaranteed</li>
+              </ul></li>
+          </ul>
+          </section>
+          <section>
+          <h3>Safe State Example</h3>
+              <p class="small-font">Suppose: 12 tape drives and 3 processes: p0, p1, and p2</p>
+              <table>
+              <tr class="small-font"><th></th>
+              <th>max need</th>
+              <th>current usage</th>
+              <th>could still
+ask for</th></tr>
+                  <tr>
+                      <td>p0</td>
+                      <td>10</td>
+                      <td>5</td>
+                      <td>5</td>
+                  </tr>
+                  <tr>
+                      <td>p1</td>
+                      <td>4</td>
+                      <td>2</td>
+                      <td>2</td>
+                  </tr>
+                  <tr>
+                      <td>p2</td>
+                      <td>9</td>
+                      <td>2</td>
+                      <td>7</td>
+                  </tr>
+              </table>
+              <p class="fragment small-font">3 drives remain</p>
+              <p class="fragment small-font">Current state is safe because a safe sequence exists: [p1, p0, p2]</p>
+              <ul class="fragment small-font">
+                  <li>p1 can complete with remaining resources</li>
+                  <li>p0 can complete with remaining+p1</li>
+                  <li>p2 can complete with remaining+p1+p0</li>
+              </ul>
+              <p class="fragment small-font"><em>What if p2 requests 1 drive? Grant or not?</em></p>
+          </section>
+          <section>
+          <h3>Banker’s Algorithm</h3>
+              <p>from 10,000 feet:</p>
+          <ul><li>Process declares its worst case needs, asks
+for what it “really” needs, a little at a time</li>
+          <li>Algorithm decides when to grant requests <ul>
+              <li>Build a graph assuming request granted</li>
+              <li>Reducible? yes: grant request, no: wait</li>
+          </ul></li></ul>
+              <ul>
+                  <strong>Problems:</strong>
+              <li>Fixed number of processes</li>
+              <li>Need worst case needs ahead of time</li>
+              <li>Expensive</li></ul>
+          </section>
+          <section>
+          <h3>Wanna implement it?</h3>
+              <p>Here is pseudo code 😎</p>
+              <pre><code class="hljs">[Avail] = [FreeResources] 
+    Add all nodes to UNFINISHED 
+    do {
+        done = true
+        Foreach node in UNFINISHED {	
+            if ([Maxnode]-[Allocnode] &le; [Avail]) {
+                remove node from UNFINISHED
+                [Avail] = [Avail] + [Allocnode]
+                done = false
+                }
+            }
+    } until(done)
+
+              </code></pre>
+          </section>
+          <section>
+          <h3>Banker’s Algorithm (less conservative)</h3>
+              <ul>
+                  <li>Allocate resources dynamically
+</li>
+                  <li>Keeps system in a “SAFE” state</li>
+                  <li>Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources
+</li>
+              </ul>
+          </section>
+          <section>
+          <h3>Banker’s Algorithm Example</h3>
+              <img src="img/Banker.png" alt="">
+              <article class="small-font">
+              <h4>Feeding Philosophers</h4>
+                  <ul>
+                      <li><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
+                      <ul>
+                          <li>Not last chopstick</li>
+                          <li>Is last chopstick but someone will have two afterwards</li>
+                      </ul></li>
+                      <li><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
+                  </ul>
+              </article>
+          </section>
+          <section>
+          <h3>Why would we not told them?</h3>
+              <ul><li class="fragment"><strong>Break out:</strong> detect the deadlock cycle and forcibly take away a resource from a thread to break it.</li>
+                      <li class="fragment"><strong>Don’t make multiple independent requests:</strong> grab both chopsticks at once.</li></ul>
+              <p class="fragment">Requires a new mechanism.</p>
+          </section>
+      </section>
+      <section>
+      <section><h3>Reactive
+Responses to Deadlocks</h3>
+          <blockquote>If neither avoidance or prevention is
+implemented, deadlocks can (and will)
+occur. Now what?</blockquote> <p>Detect &amp; Recover</p></section>
+      <section>
+          <h3>Deadlock
+Detection</h3>
+          <ul>
+              <li>Track resource allocation (who has what)</li>
+              <li>Track pending requests (who’s waiting for what)</li>
+          </ul>
+          <ul class="small-font">When should we run this?
+          <li>For each request?</li>
+          <li>After each unsatisfiable request?</li>
+          <li>Hourly?</li>
+          <li>Once CPU utilization drops below a threshold?</li>
+          <li>Some combination of these?</li></ul>
+          </section>
+          <section>
+          <h3>Deadlock
+Recovery</h3>
+              <p>Blue screen &amp; reboot?</p>
+              <ul>Kill one/all deadlocked processes
+                  <li>Pick a victim</li>
+                  <li>Terminate</li>
+                  <li>Repeat if needed</li>
+              </ul>
+              <ul>Preempt resource/processes till deadlock broken
+                  <li>Pick a victim (# resources held, execution time)</li>
+                  <li>Rollback (partial or total, not always possible)</li>
+                  <li>Starve (prevent process from being executed)</li>
+              </ul>
+          </section>
+          <section><h2>Summary</h2>
+          <ul>
+              <em>P
+revent</em>
+              <li>Negate one of the four necessary conditions.</li>
+              <em>A
+void</em>
+              <li>Schedule processes really carefully (?)</li>
+              <em>Detect</em>
+              <li>Determine if a deadlock has occurred</li>
+              <em>Recover</em>
+              <li>Kill or rollback</li>
+          </ul>
+          </section>
+      </section>
+      <section style="text-align: left;" data-background="#018383" data-background-transition="slide" data-transition="zoom">
+                <h3>Thank you for comming</h3>
+    
+                <p>
+                    <small><a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a>  , Hoang Le, Hai Nguyen, Thanh Nguyen</small>
+                </p>
+            </section>
   </div>
 </div>
 <script src="js/reveal.js"></script> 

@@ -17,6 +17,12 @@ html {
 .col-6{
     width: 50%;
 }
+.col-3{
+    width: 25%;
+}
+.col-9{
+    width: 75%;
+}
 .container img.no-border{
     border: none;
 }
