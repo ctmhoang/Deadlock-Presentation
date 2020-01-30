@@ -547,10 +547,10 @@ do {
                         </li>
                     </ul>
                     <ul>
-                        <strong>Problems:</strong>
-                        <li>Fixed number of processes</li>
-                        <li>Need worst case needs ahead of time</li>
-                        <li>Expensive</li>
+                        <strong class="fragment">Problems:</strong>
+                        <li class="fragment">Fixed number of processes</li>
+                        <li class="fragment">Need worst case needs ahead of time</li>
+                        <li class="fragment">Expensive</li>
                     </ul>
                 </section>
                 <section>
@@ -574,10 +574,10 @@ do {
                 <section>
                     <h3>Banker’s Algorithm (less conservative)</h3>
                     <ul>
-                        <li>Allocate resources dynamically
+                        <li class="fragment">Allocate resources dynamically
                         </li>
-                        <li>Keeps system in a “SAFE” state</li>
-                        <li>Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources
+                        <li class="fragment">Keeps system in a “SAFE” state</li>
+                        <li class="fragment">Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources
                         </li>
                     </ul>
                 </section>
@@ -585,15 +585,15 @@ do {
                     <h3>Banker’s Algorithm Example</h3>
                     <img src="img/Banker.png" alt="">
                     <article class="small-font">
-                        <h4>Feeding Philosophers</h4>
+                        <h4 class="fragment">Feeding Philosophers</h4>
                         <ul>
-                            <li><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
+                            <li class="fragment"><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
                                 <ul>
-                                    <li>Not last chopstick</li>
-                                    <li>Is last chopstick but someone will have two afterwards</li>
+                                    <li class="fragment">Not last chopstick</li>
+                                    <li class="fragment">Is last chopstick but someone will have two afterwards</li>
                                 </ul>
                             </li>
-                            <li><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
+                            <li class="fragment"><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
                         </ul>
                     </article>
                 </section>
@@ -610,54 +610,52 @@ do {
                 <section>
                     <h3>Reactive
                         Responses to Deadlocks</h3>
-                    <blockquote>If neither avoidance or prevention is
+                    <blockquote class="fragment">If neither avoidance or prevention is
                         implemented, deadlocks can (and will)
                         occur. Now what?</blockquote>
-                    <p>Detect &amp; Recover</p>
+                    <p class="fragment">Detect &amp; Recover</p>
                 </section>
                 <section>
                     <h3>Deadlock
                         Detection</h3>
                     <ul>
-                        <li>Track resource allocation (who has what)</li>
-                        <li>Track pending requests (who’s waiting for what)</li>
+                        <li class="fragment">Track resource allocation (who has what)</li>
+                        <li class="fragment">Track pending requests (who’s waiting for what)</li>
                     </ul>
-                    <ul class="small-font">When should we run this?
-                        <li>For each request?</li>
-                        <li>After each unsatisfiable request?</li>
-                        <li>Hourly?</li>
-                        <li>Once CPU utilization drops below a threshold?</li>
-                        <li>Some combination of these?</li>
+                    <ul class="small-font fragment">When should we run this?
+                        <li class="fragment">For each request?</li>
+                        <li class="fragment">After each unsatisfiable request?</li>
+                        <li class="fragment">Hourly?</li>
+                        <li class="fragment">Once CPU utilization drops below a threshold?</li>
+                        <li class="fragment">Some combination of these?</li>
                     </ul>
                 </section>
                 <section>
                     <h3>Deadlock
                         Recovery</h3>
-                    <p>Blue screen &amp; reboot?</p>
-                    <ul>Kill one/all deadlocked processes
-                        <li>Pick a victim</li>
-                        <li>Terminate</li>
-                        <li>Repeat if needed</li>
+                    <p class="fragment">Blue screen &amp; reboot?</p>
+                    <ul class="fragment">Kill one/all deadlocked processes
+                        <li class="fragment">Pick a victim</li>
+                        <li class="fragment">Terminate</li>
+                        <li class="fragment">Repeat if needed</li>
                     </ul>
-                    <ul>Preempt resource/processes till deadlock broken
-                        <li>Pick a victim (# resources held, execution time)</li>
-                        <li>Rollback (partial or total, not always possible)</li>
-                        <li>Starve (prevent process from being executed)</li>
+                    <ul class="fragment">Preempt resource/processes till deadlock broken
+                        <li> class="fragment"Pick a victim (# resources held, execution time)</li>
+                        <li class="fragment">Rollback (partial or total, not always possible)</li>
+                        <li class="fragment">Starve (prevent process from being executed)</li>
                     </ul>
                 </section>
                 <section>
                     <h2>Summary</h2>
                     <ul>
-                        <em>P
-                            revent</em>
-                        <li>Negate one of the four necessary conditions.</li>
-                        <em>A
-                            void</em>
-                        <li>Schedule processes really carefully (?)</li>
-                        <em>Detect</em>
-                        <li>Determine if a deadlock has occurred</li>
-                        <em>Recover</em>
-                        <li>Kill or rollback</li>
+                        <em class="fragment">Prevent</em>
+                        <li class="fragment">Negate one of the four necessary conditions.</li>
+                        <em class="fragment">Avoid</em>
+                        <li class="fragment">Schedule processes really carefully (?)</li>
+                        <em class="fragment">Detect</em>
+                        <li class="fragment">Determine if a deadlock has occurred</li>
+                        <em class="fragment">Recover</em>
+                        <li class="fragment">Kill or rollback</li>
                     </ul>
                 </section>
             </section>
