@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>DeadLock</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <!-- Specify whether or not telephone numbers in the HTML content should appear as hypertext links -->
     <meta name="format-detection" content="telephone=no" />
     <!-- Keeps the logical window size used when displaying a page mobile browsers -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="img/duke/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="img/duke/favicon-32x32.png"
+    />
     <!-- Provide a short description of the page. -->
-    <meta name="description" content="This is an my project in Intro to web dev">
+    <meta name="description" content="Deadlock Presentation " />
     <!-- This meta tag tells Google not to show the sitelinks search box. -->
     <meta name="google" content="nositelinkssearchbox" />
     <!-- Control the behavior of search engine crawling and indexing. 
@@ -22,228 +35,327 @@
     <!-- Used for verifying ownership of a site. -->
     <meta name="verify" content="Cameron" />
     <!-- Defines the language, American English is the default. -->
-    <meta property="og:locale" content="en-IN">
+    <meta property="og:locale" content="en-IN" />
     <!-- Name of the author of the document -->
     <meta name="author" content="Cameron Hoang" />
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/night.css">
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/night.css" />
     <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/monokai.css">
+    <link rel="stylesheet" href="lib/css/monokai.css" />
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
     </script>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
 
-<body>
+  <body>
     <div class="reveal">
-        <div class="slides">
-            <section>
-                <h1>Topic: Deadlocks</h1>
-                <h3> Team 4: Tuan Hoang, Hoang Le, Hai Nguyen, Thanh Nguyen.</h3>
-                <p><small>Created with 💖 by <a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a></small></p>
-            </section>
-            <section>
-                <section>
-                    <h2>Locking Multiple Resources</h2>
-                    <ul>
-                        <li class="fragment">Locks protect access to shared resources.</li>
-                        <li class="fragment">Threads may need multiple shared resources to perform some operation.</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Ensuring Progress</h3>
-                    <ul>
-                        <li class="fragment">Schedulers try to schedule jobs efficiently </li>
-                        <li class="fragment">Assume that the threads make progress. </li>
-                        <li class="fragment">If they are all just waiting for each other or spinning in loops, the scheduler cannot help much. </li>
-                    </ul>
-                    <p class="fragment"> Let’s see what sorts of problems we might fall into and how to avoid them </p>
-                </section>
-                <section data-markdown>
-                    <h3>Dining Philosophers <small>[Dijkstra 68]</small></h3>
-                    <script class="col-6" type="text/template">
-                        ### Consider we have a psudo code below:
-```
-class Philosopher: 
-    chopsticks[N] = [Semaphore(1),…]
-    def __init__(mynum)
-        self.id = mynum
-    def eat():
-        right = self.id
-        left = (self.id +1 ) % N
-        while True:
-        P(chopsticks[left])
-        P(chopsticks[right])
-        # om nom nom
-        V(chopsticks[right])
-        V(chopsticks[left])
-```
+      <div class="slides">
+        <section>
+          <h1>Topic: Deadlocks</h1>
+          <h3>
+            Team 4: Tuan Hoang, Hoang Le, Hai Nguyen, Thanh Nguyen, Tue Nguyen.
+          </h3>
+          <p>
+            <small
+              >Created with 💖 by
+              <a href="https://github.com/Artlist-creator" target="_blank"
+                >Tuan Hoang</a
+              ></small
+            >
+          </p>
+        </section>
+        <section>
+          <section>
+            <h2>Locking Multiple Resources</h2>
+            <ul>
+              <li class="fragment">
+                Locks protect access to shared resources.
+              </li>
+              <li class="fragment">
+                Threads may need multiple shared resources to perform some
+                operation.
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Ensuring Progress</h3>
+            <ul>
+              <li class="fragment">
+                Schedulers try to schedule jobs efficiently.
+              </li>
+              <li class="fragment">Assume that the threads make progress.</li>
+              <li class="fragment">
+                If they are all just waiting for each other or spinning in
+                loops, the scheduler cannot help much.
+              </li>
+            </ul>
+            <p class="fragment">
+              Let’s see what sorts of problems we might fall into and how to
+              avoid them
+            </p>
+          </section>
+          <section data-markdown>
+            <h3>Dining Philosophers <small>[Dijkstra 68]</small></h3>
+            <script class="col-6" type="text/template">
+              ### Consider we have a psudo code below:
+              ```
+              class Philosopher:
+                  chopsticks[N] = [Semaphore(1),…]
+                  def __init__(mynum)
+                      self.id = mynum
+                  def eat():
+                      right = self.id
+                      left = (self.id +1 ) % N
+                      while True:
+                      P(chopsticks[left])
+                      P(chopsticks[right])
+                      # om nom nom
+                      V(chopsticks[right])
+                      V(chopsticks[left])
+              ```
             </script>
-                </section>
-                <section>
-                    <h3>Let's be more clear about it</h3>
-                    <div class="container">
-                        <div class="col-6">
-                            <ul>
-                                <li class="fragment fade-down"> Philosophers go out for Chinese food </li>
-                                <li class="fragment fade-down">Need exclusive access to 2 chopsticks to eat food</li>
-                                <ul class="small-font">
-                                    <li class="fragment fade-right">N processes share N resources </li>
-                                    <li class="fragment fade-right">resource requests occur in pairs</li>
-                                    <li class="fragment fade-right">random think times</li>
-                                    <li class="fragment fade-right">hungry philosopher grabs a fork</li>
-                                    <li class="fragment fade-right">...and doesn’t let go</li>
-                                    <li class="fragment fade-right">...until the other fork is free</li>
-                                    <li class="fragment fade-right">...and the linguine is eaten</li>
-                                </ul>
-                            </ul>
-                        </div>
-                        <div class="col-6"> <img class="no-border" src="img/table.png" alt="Illustration Picture"></div>
-                    </div>
-                </section>
-                <section>
-                    <h3>Starvation vs. Deadlock</h3>
-                    <p class="fragment">Starvation:
-                        thread waits indefinitely</p>
-                    <p class="fragment">Deadlock:
-                        circular waiting for resources</p>
-                    <p class="fragment">Deadlock
-                        ⇒starvation, but not vice versa</p>
-                </section>
-                <section>
-                    <h3> Deadlock happens </h3>
-                    <article class="fragment"> Deadlock occurs when a thread or set of threads are waiting for each other to finish and thus nobody ever does. </article>
-                </section>
-                <section>
-                    <h3>Self Deadlock</h3>
-                    <article>
-                        <h4 class="fragment">A single thread can deadlock. How?</h4>
-                        <small class="fragment fade-left">Thread A acquires Resource 1. Thread A tries to reacquire Resource 1. </small>
-                        <h4 class="fragment">This seems inane. Why would this happen?</h4>
-                        <small class="fragment fade-left">foo() needs Resource 1. bar() needs Resource 1. While locking Resource 1 foo() calls bar(). </small>
-                        <h4 class="fragment">Can we solve this problem?</h4>
-                        <small class="fragment fade-left">Yes! Recursive locks. Allow a thread to reacquire a lock that it already holds, as long as calls to acquire are matched by calls to release.
-                            This kind of problem is not uncommon</small>
-                    </article>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Example: Single-Lane Bridge Crossing</h3>
-                    <figure> <img src="img/CA.png" alt="Bridge in Yosemite National Park" width="70%">
-                        <figcaption>CA 140 to Yosemite National Park </figcaption>
-                    </figure>
-                </section>
-                <section>
-                    <h3>Bridge Crossing Example</h3>
-                    <img src="img/BridProbs.png" alt="">
-                    <ul class="small-font">
-                        <li class="fragment">Each segment of road can be viewed as a resource
-                            <ul>
-                                <li class="fragment">Car must own the segment under them </li>
-                                <li class="fragment">Must acquire segment that they are moving into </li>
-                            </ul>
-                        </li>
-                        <li class="fragment">Deadlock: Two cars in opposite directions meet in middle </li>
-                        <li class="fragment">Resolving deadlock: “Preempt” road segment, force one car (or several cars) to back up </li>
-                        <li class="fragment">Prevent deadlock: make sure cars facing opposite directions don’t enter the bridge simultaneously </li>
-                        <li class="fragment">Starvation (not deadlock): Eastbound traffic doesn’t stop for westbound traffic </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock with Locks</h3>
-                    <img src="img/Thread.png" alt="">
-                    <ul class="small-font">
-                        <li class="fragment">Thread 1 and Thread 2 both need two locks, but grab them in different orders </li>
-                        <li class="fragment">Under what conditions does deadlock occur? </li>
-                        <li class="fragment">Why might this code run many times with no problem? </li>
-                        <li class="fragment">How do you fix it? </li>
-                    </ul>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Necessary Conditions for Deadlock</h3>
-                    <p class="fragment fade-down">A deadlock cannot occur unless all of the following conditions are met: </p>
-                    <ol>
-                        <li class="fragment">Acquire can block invoker.(Protect Access)</li>
-                        <li class="fragment">Hold &amp; wait. A process can be blocked while
-                            holding resources. (Multiple independent requests)</li>
-                        <li class="fragment">No resources preemption. Allocated resources cannot
-                            be reclaimed. Explicit release operation
-                            needed.</li>
-                        <li class="fragment">Circular waits are possible.<br>
-                            <small>Let p ⇒ q denote <q>p waits for q to release a resource</q>. Then
-                                P1 ⇒ P2 ⇒ … Pn ⇒ P1</small></li>
-                    </ol>
-                </section>
-                <section>
-                    <h3>Is this a Deadlock?</h3>
-                    <p> Truck A has to wait for Truck B to move </p>
-                    <img class="fragment" src="img/isdeadlock1.png" alt="">
-                </section>
-                <section>
-                    <h3>Is this a Deadlock?</h3>
-                    <p>Gridlock</p>
-                    <img class="fragment" src="img/08-deadlocks.jpg" alt="">
-                </section>
-                <section>
-                    <h3>Is this a Deadlock?</h3>
-                    <img class="fragment" src="img/09-deadlocks.jpg" alt="">
-                </section>
-                <section>
-                    <h3>Is this a Deadlock?</h3>
-                    <img class="fragment" src="img/10-deadlocks.jpg" alt="">
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h2>Deadlock Detection</h2>
-                    <div class="container">
-                        <ul class="col-9 fra">
-                            Create a Wait
-                            For Graph
-                            <li class="fragment">1 Node per Process</li>
-                            <li class="fragment">1 Edge per Waiting Process, P
-                                (from P to the process it’s waiting for)</li>
-                        </ul>
-                        <img class="col-3" src="img/Graph.png" alt="">
-                    </div>
-                    <p class="fragment">Note:
-                        graph holds for a single instan ce in time</p>
-                    <p class="fragment">Cycles
-                        in graph indicate deadlock</p>
-                </section>
-                <section>
-                    <h3>Deadlock Detection Algorithm</h3>
-                    <ul>
-                        <li class="fragment">Only one of each type of resource ⇒ look for loops </li>
-                        <li class="fragment">More General Deadlock Detection Algorithm
-                            <ul>
-                                <li class="fragment fade-down">Let [X] represent an m-ary vector of non-negative
-                                    integers (quantities of resources of each type):
-                                    <pre><code class="hljs-doctag">
+          </section>
+          <section>
+            <h3>Let's be more clear about it</h3>
+            <div class="container">
+              <div class="col-6">
+                <ul>
+                  <li class="fragment fade-down">
+                    Philosophers go out for Chinese food
+                  </li>
+                  <li class="fragment fade-down">
+                    Need exclusive access to 2 chopsticks to eat food
+                  </li>
+                  <ul class="small-font">
+                    <li class="fragment fade-right">
+                      N processes share N resources
+                    </li>
+                    <li class="fragment fade-right">
+                      resource requests occur in pairs
+                    </li>
+                    <li class="fragment fade-right">random think times</li>
+                    <li class="fragment fade-right">
+                      hungry philosopher grabs a fork
+                    </li>
+                    <li class="fragment fade-right">...and doesn’t let go</li>
+                    <li class="fragment fade-right">
+                      ...until the other fork is free
+                    </li>
+                    <li class="fragment fade-right">
+                      ...and the linguine is eaten
+                    </li>
+                  </ul>
+                </ul>
+              </div>
+              <div class="col-6">
+                <img
+                  class="no-border"
+                  src="img/table.png"
+                  alt="Illustration Picture"
+                />
+              </div>
+            </div>
+          </section>
+          <section>
+            <h3>Starvation vs. Deadlock</h3>
+            <p class="fragment">Starvation: thread waits indefinitely</p>
+            <p class="fragment">Deadlock: circular waiting for resources</p>
+            <p class="fragment">Deadlock ⇒starvation, but not vice versa</p>
+          </section>
+          <section>
+            <h3>Deadlock happens</h3>
+            <article class="fragment">
+              Deadlock occurs when a thread or set of threads are waiting for
+              each other to finish and thus nobody ever does.
+            </article>
+          </section>
+          <section>
+            <h3>Self Deadlock</h3>
+            <article>
+              <h4 class="fragment">A single thread can deadlock. How?</h4>
+              <small class="fragment fade-left"
+                >Thread A acquires Resource 1. Thread A tries to reacquire
+                Resource 1.
+              </small>
+              <h4 class="fragment">
+                This seems insane. Why would this happen?
+              </h4>
+              <small class="fragment fade-left"
+                >foo() needs Resource 1. bar() needs Resource 1. While locking
+                Resource 1 foo() calls bar().
+              </small>
+              <h4 class="fragment">Can we solve this problem?</h4>
+              <small class="fragment fade-left"
+                >Yes! Recursive locks. Allow a thread to reacquire a lock that
+                it already holds, as long as calls to acquire are matched by
+                calls to release. This kind of problem is not uncommon</small
+              >
+            </article>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Example: Single-Lane Bridge Crossing</h3>
+            <figure>
+              <img
+                src="img/CA.png"
+                alt="Bridge in Yosemite National Park"
+                width="70%"
+              />
+              <figcaption>CA 140 to Yosemite National Park</figcaption>
+            </figure>
+          </section>
+          <section>
+            <h3>Bridge Crossing Example</h3>
+            <img src="img/BridProbs.png" alt="" />
+            <ul class="small-font">
+              <li class="fragment">
+                Each segment of road can be viewed as a resource
+                <ul>
+                  <li class="fragment">Car must own the segment under them</li>
+                  <li class="fragment">
+                    Must acquire segment that they are moving into
+                  </li>
+                </ul>
+              </li>
+              <li class="fragment">
+                Deadlock: Two cars in opposite directions meet in middle
+              </li>
+              <li class="fragment">
+                Resolving deadlock: “Preempt” road segment, force one car (or
+                several cars) to back up
+              </li>
+              <li class="fragment">
+                Prevent deadlock: make sure cars facing opposite directions
+                don’t enter the bridge simultaneously
+              </li>
+              <li class="fragment">
+                Starvation (not deadlock): Eastbound traffic doesn’t stop for
+                westbound traffic
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock with Locks</h3>
+            <img src="img/Thread.png" alt="" />
+            <ul class="small-font">
+              <li class="fragment">
+                Thread 1 and Thread 2 both need two locks, but grab them in
+                different orders
+              </li>
+              <li class="fragment">
+                Under what conditions does deadlock occur?
+              </li>
+              <li class="fragment">
+                Why might this code run many times with no problem?
+              </li>
+              <li class="fragment">How do you fix it?</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Necessary Conditions for Deadlock</h3>
+            <p class="fragment fade-down">
+              A deadlock cannot occur unless all of the following conditions are
+              met:
+            </p>
+            <ol>
+              <li class="fragment">
+                Acquire can block invoker.(Protect Access)
+              </li>
+              <li class="fragment">
+                Hold &amp; wait. A process can be blocked while holding
+                resources. (Multiple independent requests)
+              </li>
+              <li class="fragment">
+                No resources preemption. Allocated resources cannot be
+                reclaimed. Explicit release operation needed.
+              </li>
+              <li class="fragment">
+                Circular waits are possible.<br />
+                <small
+                  >Let p ⇒ q denote <q>p waits for q to release a resource</q>.
+                  Then P1 ⇒ P2 ⇒ … Pn ⇒ P1</small
+                >
+              </li>
+            </ol>
+          </section>
+          <section>
+            <h3>Is this a Deadlock?</h3>
+            <p>Truck A has to wait for Truck B to move</p>
+            <img class="fragment" src="img/isdeadlock1.png" alt="" />
+          </section>
+          <section>
+            <h3>Is this a Deadlock?</h3>
+            <p>Gridlock</p>
+            <img class="fragment" src="img/08-deadlocks.jpg" alt="" />
+          </section>
+          <section>
+            <h3>Is this a Deadlock?</h3>
+            <img class="fragment" src="img/09-deadlocks.jpg" alt="" />
+          </section>
+          <section>
+            <h3>Is this a Deadlock?</h3>
+            <img class="fragment" src="img/10-deadlocks.jpg" alt="" />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h2>Deadlock Detection</h2>
+            <div class="container">
+              <ul class="col-9 fra">
+                Create a Wait For Graph
+                <li class="fragment">1 Node per Process</li>
+                <li class="fragment">
+                  1 Edge per Waiting Process, P (from P to the process it’s
+                  waiting for)
+                </li>
+              </ul>
+              <img class="col-3" src="img/Graph.png" alt="" />
+            </div>
+            <p class="fragment">
+              Note: graph holds for a single instance in time
+            </p>
+            <p class="fragment">Cycles in graph indicate deadlock</p>
+          </section>
+          <section>
+            <h3>Deadlock Detection Algorithm</h3>
+            <ul>
+              <li class="fragment">
+                Only one of each type of resource ⇒ look for loops
+              </li>
+              <li class="fragment">
+                More General Deadlock Detection Algorithm
+                <ul>
+                  <li class="fragment fade-down">
+                    Let [X] represent an m-ary vector of non-negative integers
+                    (quantities of resources of each type):
+                    <pre><code class="hljs-doctag">
 [FreeResources]: 	Current free resources each type
 [RequestX]:	Current requests from thread X
 [AllocX]:	Current resources held by thread X
                 </code></pre>
-                                </li>
-                                <li class="fragment">See if tasks can eventually terminate on their own</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <div class="container">
-                        <pre class="col-6 fragment"><code class="hljs">
+                  </li>
+                  <li class="fragment">
+                    See if tasks can eventually terminate on their own
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <div class="container">
+              <pre class="col-6 fragment"><code class="hljs">
 [Avail] = [FreeResources]
 Add all nodes to UNFINISHED
 do {
@@ -257,140 +369,173 @@ do {
     }
 } until(done)
             </code></pre>
-                        <img class="col-6 fragment" src="img/grapDec.png" style="margin: 30px" alt=""> </div>
-                    <p class="fragment">• Nodes left in UNFINISHED ⇒ deadlocked </p>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3 class="fragment fade-up"><small>Question #1</small><br>
-                        Does order of reduction matter?</h3>
-                    <p><strong class="fragment">Answer: No.</strong></p>
-                    <article class="fragment"><strong>Explaination: </strong>an unchosen candidate at one
-                        step remains a candidate for later steps.
-                        Eventually regardless of order every node
-                        will be reduced.</article>
-                </section>
-                <section>
-                    <h3 class="fragment fade-up"><small>Question #2</small><br>
-                        If a system is deadlocked, could the deadlock go
-                        away on its own?</h3>
-                    <p class="fragment"><strong>Answer: No,</strong> unless someone kills one of the threads or
-                        something causes a process to release a resource.</p>
-                    <article class="small-font fragment">Many real systems put time limits on
-                        “waiting” precisely for this reason. When a process gets a
-                        timeout exception, it gives up waiting; this can eliminate
-                        the deadlock. <br>
-                        Process may be forced to terminate itself because often,
-                        if a process can’t get what it needs, there are no other
-                        options available!</article>
-                </section>
-                <section>
-                    <h3 class="fragment fade-up"><small>Question #3</small><br>
-                        Suppose a system isn’t deadlocked at time T.
-                        Can we assume it will still be free of deadlock at
-                        time T+1?</h3>
-                    <p class="fragment"><strong>Answer: No !!!</strong></p>
-                    <article class="fragment"> Explanation:
-                        the very next thing it might do
-                        is to run some process that will request a
-                        resource…<br>
-                        … establishing a cyclic wait<br>
-                        … and causing deadlock </article>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Proactive
-                        Responses to Deadlocks</h3>
-                    <ul>
-                        <em class="fragment">Let’s not deadlock, okay?</em>
-                        <li class="fragment"><strong>Deadlock Prevention:</strong> make it impossible
-                            <ul>
-                                <li class="fragment">Prevent 1 of the 4 necessary conditions from
-                                    arising ……. disaster averted!</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock Prevention: Negate 1 of 4</h3>
-                    <ul>
-                        <strong class="fragment">#1 Mutual exclusion / Bounded Resources</strong>
-                        <li class="fragment">Make resources sharable without locks?</li>
-                        <li class="fragment">Make more resources available?</li>
-                        <li class="fragment">Not always possible ( e.g., printers)</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock Prevention: Negate 2 of 4</h3>
-                    <p class="fragment"><strong>#
-                            2 Hold and wait</strong></p>
-                    <ul class="small-font fragment">
-                        Don’t hold resources when waiting for another
-                        <li class="fragment"> Re write code:
-                            <div class="container">
-                                <pre class="col-6 fragment"><code class="hljs">Module:: foo()
+              <img
+                class="col-6 fragment"
+                src="img/grapDec.png"
+                style="margin: 30px"
+                alt=""
+              />
+            </div>
+            <p class="fragment">• Nodes left in UNFINISHED ⇒ deadlocked</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3 class="fragment fade-up">
+              <small>Question #1</small><br />
+              Does order of reduction matter?
+            </h3>
+            <p><strong class="fragment">Answer: No.</strong></p>
+            <article class="fragment">
+              <strong>Explaination: </strong>an unchosen candidate at one step
+              remains a candidate for later steps. Eventually regardless of
+              order every node will be reduced.
+            </article>
+          </section>
+          <section>
+            <h3 class="fragment fade-up">
+              <small>Question #2</small><br />
+              If a system is deadlocked, could the deadlock go away on its own?
+            </h3>
+            <p class="fragment">
+              <strong>Answer: No,</strong> unless someone kills one of the
+              threads or something causes a process to release a resource.
+            </p>
+            <article class="small-font fragment">
+              Many real systems put time limits on “waiting” precisely for this
+              reason. When a process gets a timeout exception, it gives up
+              waiting; this can eliminate the deadlock. <br />
+              Process may be forced to terminate itself because often, if a
+              process can’t get what it needs, there are no other options
+              available!
+            </article>
+          </section>
+          <section>
+            <h3 class="fragment fade-up">
+              <small>Question #3</small><br />
+              Suppose a system isn’t deadlocked at time T. Can we assume it will
+              still be free of deadlock at time T+1?
+            </h3>
+            <p class="fragment"><strong>Answer: No !!!</strong></p>
+            <article class="fragment">
+              Explanation: the very next thing it might do is to run some
+              process that will request a resource…<br />
+              … establishing a cyclic wait<br />
+              … and causing deadlock
+            </article>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Proactive Responses to Deadlocks</h3>
+            <ul>
+              <em class="fragment">Let’s not deadlock, okay?</em>
+              <li class="fragment">
+                <strong>Deadlock Prevention:</strong> make it impossible
+                <ul>
+                  <li class="fragment">
+                    Prevent 1 of the 4 necessary conditions from arising …….
+                    disaster averted!
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Prevention: Negate 1 of 4</h3>
+            <ul>
+              <strong class="fragment"
+                >#1 Mutual exclusion / Bounded Resources</strong
+              >
+              <li class="fragment">Make resources sharable without locks?</li>
+              <li class="fragment">Make more resources available?</li>
+              <li class="fragment">Not always possible ( e.g., printers)</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Prevention: Negate 2 of 4</h3>
+            <p class="fragment"><strong># 2 Hold and wait</strong></p>
+            <ul class="small-font fragment">
+              Don’t hold resources when waiting for another
+              <li class="fragment">
+                Re write code:
+                <div class="container">
+                  <pre class="col-6 fragment"><code class="hljs">Module:: foo()
     lock.acquire();
     doSomeStuff();
     otherModule --&gt; bar();
     doOtherStuff();
     lock.release();}</code></pre>
-                                <pre class="col-6 fragment"><code class="hljs">Module:: foo()
+                  <pre class="col-6 fragment"><code class="hljs">Module:: foo()
     doSomeStuff();
     otherModule--&gt; bar();
     doOtherStuff();
 }
                   </code></pre>
-                            </div>
-                        </li>
-                        <li class="fragment">Request all resources before execution begins
-                            <ul>
-                                <li class="fragment">Processes don’t know what they need ahead of time</li>
-                                <li class="fragment">Starvation (if waiting on many popular resources)</li>
-                                <li class="fragment">Low utilization (need resource only for a bit)</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <p class="small-font fragment">Optimization: Release all resources before requesting
-                        anything new? Still has last two problems 😞</p>
-                </section>
-                <section>
-                    <h3>Deadlock Prevention: Negate 3 of 4</h3>
-                    <p class="fragment"><strong>
-                            #3 No preemption</strong></p>
-                    <ol>
-                        <strong class="fragment">Allow runtime system to pre-
-                            empt:</strong>
-                        <li class="fragment">Requesting processes’ resources if all not available</li>
-                        <li class="fragment">Resources of waiting processes to satisfy request</li>
-                    </ol>
-                    <ul class="fragment">
-                        Good when easy to save
-                        restore state of resource
-                        <li class="fragment">CPU registers</li>
-                        <li class="fragment">memory virtualization (page memory to disk, maybe
-                            even page tables)</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock Prevention: Negate 4 of 4</h3>
-                    <p><strong class="fragment">#
-                            4 Circular Wait</strong></p>
-                    <ul>
-                        <li class="fragment">Single lock for entire system?</li>
-                        <li class="fragment">Impose partial ordering on resources,
-                            request in order</li>
-                    </ul>
-                    <p class="fragment"><em>Intuition:</em> Cycle requires an edge from low to
-                        high, and from high to low numbered node, or
-                        to same node</p>
-                    <img class="fragment" src="img/Locks.png" alt="">
-                </section>
-                <section>
-                    <h3>Preventing Dining Philosophers Deadlock?</h3>
-                    <div class="container">
-                        <pre class="col-6 fragment"><code class="hljs">class Philosopher:
+                </div>
+              </li>
+              <li class="fragment">
+                Request all resources before execution begins
+                <ul>
+                  <li class="fragment">
+                    Processes don’t know what they need ahead of time
+                  </li>
+                  <li class="fragment">
+                    Starvation (if waiting on many popular resources)
+                  </li>
+                  <li class="fragment">
+                    Low utilization (need resource only for a bit)
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <p class="small-font fragment">
+              Optimization: Release all resources before requesting anything
+              new? Still has last two problems 😞
+            </p>
+          </section>
+          <section>
+            <h3>Deadlock Prevention: Negate 3 of 4</h3>
+            <p class="fragment"><strong>#3 No preemption</strong></p>
+            <ol>
+              <strong class="fragment"
+                >Allow runtime system to pre-empt:</strong
+              >
+              <li class="fragment">
+                Requesting processes’ resources if all not available
+              </li>
+              <li class="fragment">
+                Resources of waiting processes to satisfy request
+              </li>
+            </ol>
+            <ul class="fragment">
+              Good when easy to save restore state of resource
+              <li class="fragment">CPU registers</li>
+              <li class="fragment">
+                memory virtualization (page memory to disk, maybe even page
+                tables)
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Prevention: Negate 4 of 4</h3>
+            <p><strong class="fragment"># 4 Circular Wait</strong></p>
+            <ul>
+              <li class="fragment">Single lock for entire system?</li>
+              <li class="fragment">
+                Impose partial ordering on resources, request in order
+              </li>
+            </ul>
+            <p class="fragment">
+              <em>Intuition:</em> Cycle requires an edge from low to high, and
+              from high to low numbered node, or to same node
+            </p>
+            <img class="fragment" src="img/Locks.png" alt="" />
+          </section>
+          <section>
+            <h3>Preventing Dining Philosophers Deadlock?</h3>
+            <div class="container">
+              <pre class="col-6 fragment"><code class="hljs">class Philosopher:
     chopsticks[N] = [Semaphore(1),…]
     def __init__(mynum)
         self.id = mynum
@@ -404,159 +549,196 @@ do {
             V(right)
             V(left)
             </code></pre>
-                        <div class="col-6" style="margin-left: 13px">
-                            <ol class="small-font">
-                                <li class="fragment">Bounded Resources</li>
-                                <li class="fragment">Hold &amp; Wait</li>
-                                <li class="fragment">No Pre-emption</li>
-                                <li class="fragment">Circular Wait</li>
-                            </ol>
-                            <p class="fragment">Can we prevent one of
-                                these conditions?
-                                Ideas?</p>
-                        </div>
-                    </div>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Proactive
-                        Responses to Deadlocks</h3>
-                    <ul>
-                        <em class="fragment">Let’s not deadlock, okay?</em>
-                        <li class="fragment"><strong>Deadlock Prevention:</strong> make it impossible
-                            <ul>
-                                <li class="fragment">Prevent 1 of the 4 necessary conditions from
-                                    arising ……. disaster averted!</li>
-                            </ul>
-                        </li>
-                        <li class="fragment"><strong>Deadlock Avoidance:</strong> make it not happen
-                            <ul>
-                                <li class="fragment">Think before you act</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock Avoidance</h3>
-                    <ul class="fragment">
-                        How do cars do it?
-                        <li class="fragment">Try not to block an intersection</li>
-                        <li class="fragment">Don’t drive into the intersection if you can see
-                            that you’ll be stuck there.</li>
-                    </ul>
-                    <ul class="fragment">
-                        Why does this work?
-                        <li class="fragment">Prevents a wait for relationship</li>
-                        <li class="fragment">Cars won’t take up a resource if they see they
-                            won’t be able to acquire the next one…</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock Dynamics</h3>
-                    <ul class="small-font">
-                        <strong class="fragment">Safe state:</strong>
-                        <li class="fragment">It is possible to avoid deadlock and eventually grant all
-                            resource requests by careful scheduling</li>
-                        <li class="fragment">May require delaying a resource request even when resources
-                            are available! </li>
-                        <strong class="fragment fade-down">Unsafe state:</strong>
-                        <li class="fragment">Some sequence of resource requests can result in deadlock
-                            even with careful scheduling</li>
-                        <strong class="fragment fade-down">Doomed state:</strong>
-                        <li class="fragment">All possible computations lead to deadlock</li>
-                        <strong class="fragment fade-down">Deadlocked state:</strong>
-                        <li class="fragment">System has at least one deadlock</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Possible System States</h3>
-                    <img src="img/Sysstate.png" alt="">
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Safe State</h3>
-                    <ul class="small-font">
-                        <li class="fragment">A state is said to be safe , if there exists a sequence of
-                            processes [P 1 , P 2 ,…, P n ] such that for each P i the
-                            resources that P i can still request can be satisfied by the
-                            currently available resources plus the resources held by
-                            all P j where j &lt; i</li>
-                        <li class="fragment">State is safe b/c OS can definitely avoid deadlock
-                            <ul>
-                                <li class="fragment">block new requests until safe order is executed</li>
-                            </ul>
-                        </li>
-                        <li class="fragment">Avoids circular wait condition
-                            <ul>
-                                <li class="fragment">Process waits until safe state is guaranteed</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Safe State Example</h3>
-                    <p class="small-font">Suppose: 12 tape drives and 3 processes: p0, p1, and p2</p>
-                    <table>
-                        <tr class="small-font">
-                            <th></th>
-                            <th>max need</th>
-                            <th>current usage</th>
-                            <th>could still
-                                ask for</th>
-                        </tr>
-                        <tr>
-                            <td>p0</td>
-                            <td>10</td>
-                            <td>5</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>p1</td>
-                            <td>4</td>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
-                        <tr>
-                            <td>p2</td>
-                            <td>9</td>
-                            <td>2</td>
-                            <td>7</td>
-                        </tr>
-                    </table>
-                    <p class="fragment small-font">3 drives remain</p>
-                    <p class="fragment small-font">Current state is safe because a safe sequence exists: [p1, p0, p2]</p>
-                    <ul class="fragment small-font">
-                        <li>p1 can complete with remaining resources</li>
-                        <li>p0 can complete with remaining+p1</li>
-                        <li>p2 can complete with remaining+p1+p0</li>
-                    </ul>
-                    <p class="fragment small-font"><em>What if p2 requests 1 drive? Grant or not?</em></p>
-                </section>
-                <section>
-                    <h3>Banker’s Algorithm</h3>
-                    <p class="fragment">from 10,000 feet:</p>
-                    <ul>
-                        <li class="fragment">Process declares its worst case needs, asks
-                            for what it “really” needs, a little at a time</li>
-                        <li class="fragment">Algorithm decides when to grant requests <ul>
-                                <li class="fragment">Build a graph assuming request granted</li>
-                                <li class="fragment">Reducible? yes: grant request, no: wait</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <ul>
-                        <strong class="fragment">Problems:</strong>
-                        <li class="fragment">Fixed number of processes</li>
-                        <li class="fragment">Need worst case needs ahead of time</li>
-                        <li class="fragment">Expensive</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Wanna implement it?</h3>
-                    <p>Here is pseudo code 😎</p>
-                    <pre><code class="hljs">[Avail] = [FreeResources] 
+              <div class="col-6" style="margin-left: 13px">
+                <ol class="small-font">
+                  <li class="fragment">Bounded Resources</li>
+                  <li class="fragment">Hold &amp; Wait</li>
+                  <li class="fragment">No Pre-emption</li>
+                  <li class="fragment">Circular Wait</li>
+                </ol>
+                <p class="fragment">
+                  Can we prevent one of these conditions? Ideas?
+                </p>
+              </div>
+            </div>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Proactive Responses to Deadlocks</h3>
+            <ul>
+              <em class="fragment">Let’s not deadlock, okay?</em>
+              <li class="fragment">
+                <strong>Deadlock Prevention:</strong> make it impossible
+                <ul>
+                  <li class="fragment">
+                    Prevent 1 of the 4 necessary conditions from arising …….
+                    disaster averted!
+                  </li>
+                </ul>
+              </li>
+              <li class="fragment">
+                <strong>Deadlock Avoidance:</strong> make it not happen
+                <ul>
+                  <li class="fragment">Think before you act</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Avoidance</h3>
+            <ul class="fragment">
+              How do cars do it?
+              <li class="fragment">Try not to block an intersection</li>
+              <li class="fragment">
+                Don’t drive into the intersection if you can see that you’ll be
+                stuck there.
+              </li>
+            </ul>
+            <ul class="fragment">
+              Why does this work?
+              <li class="fragment">Prevents a wait for relationship</li>
+              <li class="fragment">
+                Cars won’t take up a resource if they see they won’t be able to
+                acquire the next one…
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Dynamics</h3>
+            <ul class="small-font">
+              <strong class="fragment">Safe state:</strong>
+              <li class="fragment">
+                It is possible to avoid deadlock and eventually grant all
+                resource requests by careful scheduling
+              </li>
+              <li class="fragment">
+                May require delaying a resource request even when resources are
+                available!
+              </li>
+              <strong class="fragment fade-down">Unsafe state:</strong>
+              <li class="fragment">
+                Some sequence of resource requests can result in deadlock even
+                with careful scheduling
+              </li>
+              <strong class="fragment fade-down">Doomed state:</strong>
+              <li class="fragment">
+                All possible computations lead to deadlock
+              </li>
+              <strong class="fragment fade-down">Deadlocked state:</strong>
+              <li class="fragment">System has at least one deadlock</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Possible System States</h3>
+            <img src="img/Sysstate.png" alt="" />
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Safe State</h3>
+            <ul class="small-font">
+              <li class="fragment">
+                A state is said to be safe , if there exists a sequence of
+                processes [P1 , P2 ,…, Pn ] such that for each Pi the resources
+                that Pi can still request can be satisfied by the currently
+                available resources plus the resources held by all Pj where j
+                &lt; i
+              </li>
+              <li class="fragment">
+                State is safe b/c OS can definitely avoid deadlock
+                <ul>
+                  <li class="fragment">
+                    block new requests until safe order is executed
+                  </li>
+                </ul>
+              </li>
+              <li class="fragment">
+                Avoids circular wait condition
+                <ul>
+                  <li class="fragment">
+                    Process waits until safe state is guaranteed
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Safe State Example</h3>
+            <p class="small-font">
+              Suppose: 12 tape drives and 3 processes: p0, p1, and p2
+            </p>
+            <table>
+              <tr class="small-font">
+                <th></th>
+                <th>max need</th>
+                <th>current usage</th>
+                <th>could still ask for</th>
+              </tr>
+              <tr>
+                <td>p0</td>
+                <td>10</td>
+                <td>5</td>
+                <td>5</td>
+              </tr>
+              <tr>
+                <td>p1</td>
+                <td>4</td>
+                <td>2</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>p2</td>
+                <td>9</td>
+                <td>2</td>
+                <td>7</td>
+              </tr>
+            </table>
+
+            <p class="fragment small-font">3 drives remain</p>
+            <p class="fragment small-font">
+              Current state is safe because a safe sequence exists: [p1, p0, p2]
+            </p>
+            <ul class="fragment small-font">
+              <li>p1 can complete with remaining resources</li>
+              <li>p0 can complete with remaining+p1</li>
+              <li>p2 can complete with remaining+p1+p0</li>
+            </ul>
+            <p class="fragment small-font">
+              <em>What if p2 requests 1 drive? Grant or not?</em>
+            </p>
+          </section>
+          <section>
+            <h3>Banker’s Algorithm</h3>
+            <p class="fragment">from 10,000 feet:</p>
+            <ul>
+              <li class="fragment">
+                Process declares its worst case needs, asks for what it “really”
+                needs, a little at a time
+              </li>
+              <li class="fragment">
+                Algorithm decides when to grant requests
+                <ul>
+                  <li class="fragment">
+                    Build a graph assuming request granted
+                  </li>
+                  <li class="fragment">
+                    Reducible? yes: grant request, no: wait
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul>
+              <strong class="fragment">Problems:</strong>
+              <li class="fragment">Fixed number of processes</li>
+              <li class="fragment">Need worst case needs ahead of time</li>
+              <li class="fragment">Expensive</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Wanna implement it?</h3>
+            <p>Here is pseudo code 😎</p>
+            <pre><code class="hljs">[Avail] = [FreeResources] 
     Add all nodes to UNFINISHED 
     do {
         done = true
@@ -570,125 +752,158 @@ do {
     } until(done)
 
               </code></pre>
-                </section>
-                <section>
-                    <h3>Banker’s Algorithm (less conservative)</h3>
-                    <ul>
-                        <li class="fragment">Allocate resources dynamically
-                        </li>
-                        <li class="fragment">Keeps system in a “SAFE” state</li>
-                        <li class="fragment">Algorithm allows the sum of maximum resource needs of all current threads to be greater than total resources
-                        </li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Banker’s Algorithm Example</h3>
-                    <img src="img/Banker.png" alt="">
-                    <article class="small-font">
-                        <h4 class="fragment">Feeding Philosophers</h4>
-                        <ul>
-                            <li class="fragment"><strong>Don’t wait:</strong> don’t sleep if you can’t grab the second chopstick and put down the first.
-                                <ul>
-                                    <li class="fragment">Not last chopstick</li>
-                                    <li class="fragment">Is last chopstick but someone will have two afterwards</li>
-                                </ul>
-                            </li>
-                            <li class="fragment"><strong>Break cycles:</strong> usually by acquiring resources in a well-defined order. Number chopsticks 0–4, always grab the higher-numbered chopstick first.</li>
-                        </ul>
-                    </article>
-                </section>
-                <section>
-                    <h3>Why would we not told them?</h3>
-                    <ul>
-                        <li class="fragment"><strong>Break out:</strong> detect the deadlock cycle and forcibly take away a resource from a thread to break it.</li>
-                        <li class="fragment"><strong>Don’t make multiple independent requests:</strong> grab both chopsticks at once.</li>
-                    </ul>
-                    <p class="fragment">Requires a new mechanism.</p>
-                </section>
-            </section>
-            <section>
-                <section>
-                    <h3>Reactive
-                        Responses to Deadlocks</h3>
-                    <blockquote class="fragment">If neither avoidance or prevention is
-                        implemented, deadlocks can (and will)
-                        occur. Now what?</blockquote>
-                    <p class="fragment">Detect &amp; Recover</p>
-                </section>
-                <section>
-                    <h3>Deadlock
-                        Detection</h3>
-                    <ul>
-                        <li class="fragment">Track resource allocation (who has what)</li>
-                        <li class="fragment">Track pending requests (who’s waiting for what)</li>
-                    </ul>
-                    <ul class="small-font fragment">When should we run this?
-                        <li class="fragment">For each request?</li>
-                        <li class="fragment">After each unsatisfiable request?</li>
-                        <li class="fragment">Hourly?</li>
-                        <li class="fragment">Once CPU utilization drops below a threshold?</li>
-                        <li class="fragment">Some combination of these?</li>
-                    </ul>
-                </section>
-                <section>
-                    <h3>Deadlock
-                        Recovery</h3>
-                    <p class="fragment">Blue screen &amp; reboot?</p>
-                    <ul class="fragment">Kill one/all deadlocked processes
-                        <li class="fragment">Pick a victim</li>
-                        <li class="fragment">Terminate</li>
-                        <li class="fragment">Repeat if needed</li>
-                    </ul>
-                    <ul class="fragment">Preempt resource/processes till deadlock broken
-                        <li> class="fragment"Pick a victim (# resources held, execution time)</li>
-                        <li class="fragment">Rollback (partial or total, not always possible)</li>
-                        <li class="fragment">Starve (prevent process from being executed)</li>
-                    </ul>
-                </section>
-                <section>
-                    <h2>Summary</h2>
-                    <ul>
-                        <em class="fragment">Prevent</em>
-                        <li class="fragment">Negate one of the four necessary conditions.</li>
-                        <em class="fragment">Avoid</em>
-                        <li class="fragment">Schedule processes really carefully (?)</li>
-                        <em class="fragment">Detect</em>
-                        <li class="fragment">Determine if a deadlock has occurred</li>
-                        <em class="fragment">Recover</em>
-                        <li class="fragment">Kill or rollback</li>
-                    </ul>
-                </section>
-            </section>
-            <section style="text-align: left;" data-background="#018383" data-background-transition="slide" data-transition="zoom">
-                <h3>Thank you for comming</h3>
-
-                <p>
-                    <small><a href="https://github.com/Artlist-creator" target="_blank">Tuan Hoang</a> , Hoang Le, Hai Nguyen, Thanh Nguyen</small>
-                </p>
-            </section>
-        </div>
+          </section>
+          <section>
+            <h3>Banker’s Algorithm (less conservative)</h3>
+            <ul>
+              <li class="fragment">Allocate resources dynamically</li>
+              <li class="fragment">Keeps system in a “SAFE” state</li>
+              <li class="fragment">
+                Algorithm allows the sum of maximum resource needs of all
+                current threads to be greater than total resources
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h3>Banker’s Algorithm Example</h3>
+            <img src="img/Banker.png" alt="" />
+            <article class="small-font">
+              <h4 class="fragment">Feeding Philosophers</h4>
+              <ul>
+                <li class="fragment">
+                  <strong>Don’t wait:</strong> don’t sleep if you can’t grab the
+                  second chopstick and put down the first.
+                  <ul>
+                    <li class="fragment">Not last chopstick</li>
+                    <li class="fragment">
+                      Is last chopstick but someone will have two afterwards
+                    </li>
+                  </ul>
+                </li>
+                <li class="fragment">
+                  <strong>Break cycles:</strong> usually by acquiring resources
+                  in a well-defined order. Number chopsticks 0–4, always grab
+                  the higher-numbered chopstick first.
+                </li>
+              </ul>
+            </article>
+          </section>
+          <section>
+            <h3>Why would we not told them?</h3>
+            <ul>
+              <li class="fragment">
+                <strong>Break out:</strong> detect the deadlock cycle and
+                forcibly take away a resource from a thread to break it.
+              </li>
+              <li class="fragment">
+                <strong>Don’t make multiple independent requests:</strong> grab
+                both chopsticks at once.
+              </li>
+            </ul>
+            <p class="fragment">Requires a new mechanism.</p>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3>Reactive Responses to Deadlocks</h3>
+            <blockquote class="fragment">
+              If neither avoidance or prevention is implemented, deadlocks can
+              (and will) occur. Now what?
+            </blockquote>
+            <p class="fragment">Detect &amp; Recover</p>
+          </section>
+          <section>
+            <h3>Deadlock Detection</h3>
+            <ul>
+              <li class="fragment">Track resource allocation (who has what)</li>
+              <li class="fragment">
+                Track pending requests (who’s waiting for what)
+              </li>
+            </ul>
+            <ul class="small-font fragment">
+              When should we run this?
+              <li class="fragment">For each request?</li>
+              <li class="fragment">After each unsatisfiable request?</li>
+              <li class="fragment">Hourly?</li>
+              <li class="fragment">
+                Once CPU utilization drops below a threshold?
+              </li>
+              <li class="fragment">Some combination of these?</li>
+            </ul>
+          </section>
+          <section>
+            <h3>Deadlock Recovery</h3>
+            <p class="fragment">Blue screen &amp; reboot?</p>
+            <ul class="fragment" style="float: left;">
+              <strong>Kill one/all deadlocked processes</strong>
+              <li class="fragment">Pick a victim</li>
+              <li class="fragment">Terminate</li>
+              <li class="fragment">Repeat if needed</li>
+            </ul>
+            <ul class="fragment">
+              <strong>Preempt resource/processes till deadlock broken</strong>
+              <li class="fragment">
+                Pick a victim (# resources held, execution time)
+              </li>
+              <li class="fragment">
+                Rollback (partial or total, not always possible)
+              </li>
+              <li class="fragment">
+                Starve (prevent process from being executed)
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Summary</h2>
+            <ul>
+              <em class="fragment">Prevent</em>
+              <li class="fragment">
+                Negate one of the four necessary conditions.
+              </li>
+              <em class="fragment">Avoid</em>
+              <li class="fragment">Schedule processes really carefully (?)</li>
+              <em class="fragment">Detect</em>
+              <li class="fragment">Determine if a deadlock has occurred</li>
+              <em class="fragment">Recover</em>
+              <li class="fragment">Kill or rollback</li>
+            </ul>
+          </section>
+        </section>
+        <section
+          style="text-align: left;"
+          data-background="#018383"
+          data-background-transition="slide"
+          data-transition="zoom"
+        >
+          <h3>Thank you for comming</h3>
+          <p>
+            <small
+              >Tuan Hoang, Hoang Le, Hai Nguyen, Thanh Nguyen, Tue Nguyen</small
+            >
+          </p>
+        </section>
+      </div>
     </div>
     <script src="js/reveal.js"></script>
     <script>
-        Reveal.initialize({
-            dependencies: [{
-                    src: 'plugin/markdown/marked.js'
-                },
-                {
-                    src: 'plugin/markdown/markdown.js'
-                },
-                {
-                    src: 'plugin/notes/notes.js',
-                    async: true
-                },
-                {
-                    src: 'plugin/highlight/highlight.js',
-                    async: true
-                }
-            ]
-        });
-
+      Reveal.initialize({
+        dependencies: [
+          {
+            src: "plugin/markdown/marked.js"
+          },
+          {
+            src: "plugin/markdown/markdown.js"
+          },
+          {
+            src: "plugin/notes/notes.js",
+            async: true
+          },
+          {
+            src: "plugin/highlight/highlight.js",
+            async: true
+          }
+        ]
+      });
     </script>
-</body>
-
+  </body>
 </html>
