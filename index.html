@@ -72,7 +72,26 @@
               ></small
             >
           </p>
-            <p style="position: absolute; bottom: -17vh"><em><small class="small-font"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</small></em></p>
+          <p style="position: absolute; bottom: -17vh">
+            <em
+              ><small class="small-font"
+                ><a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+                  ><img
+                    alt="Creative Commons Licence"
+                    style="border-width:0"
+                    src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"/></a
+                ><br />This work is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-nc-sa/4.0/"
+                  >Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+                  International License</a
+                >.</small
+              ></em
+            >
+          </p>
         </section>
         <section>
           <section>
@@ -165,6 +184,22 @@
                 />
               </div>
             </div>
+            <aside class="notes">
+              Origins of P( ) and V( ) In Operating Systems, the Dutch Computer
+              Scientist E. W. Dijkstra introduced a pair of synchronization
+              primitives called P( ) and V( ). To make them understandable, we
+              sometimes called them Down( ) and Up( ), or Wait( ) and Signal( ),
+              etc. Students often wonder what they stand for. So I asked a
+              colleague, Professor Gert Vegter from Groningen University in The
+              Netherlands. ... Concerning Dijkstra's semaphores: it's simple: P
+              = Plantinga, V = Vegter (:-)) In fact, P = Probeer ('Try') and V =
+              Verhoog ('Increment', 'Increase by one'). These are the operations
+              embracing the critical section. Dijkstra introduced these ops in
+              1963. Attached are 1974 lecture notes bij Dijkstra explaining the
+              PV mechanism. In dutch, unfortunately... ('Over seinpalen' = 'On
+              semaphores') Best regards, Gert ref :
+              https://cs.nyu.edu/~yap/classes/os/resources/origin_of_PV.html
+            </aside>
           </section>
           <section>
             <h3>Starvation vs. Deadlock</h3>
@@ -381,6 +416,50 @@ do {
           </section>
         </section>
         <section>
+          <section>
+            <h3>Review #1</h3>
+            <strong
+              >Which of the following is not a requirement for deadlock?</strong
+            >
+            <div class="container">
+              <ul class="col-6">
+                <li>
+                  Multiple independent resource requests.
+                </li>
+                <li>
+                  Protected access to shared resources.
+                </li>
+              </ul>
+
+              <ul class="col-6">
+                <li>
+                  A linear dependency graph.
+                </li>
+                <li>
+                  No resource preemption.
+                </li>
+              </ul>
+            </div>
+            <div class="fragment">A linear dependency graph.</div>
+          </section>
+
+          <section>
+            <h3>Review #2</h3>
+            <strong
+              >True or false: the following code ensures that variable foo is
+              protected? (Assume foo lock exists and was properly initialized.)
+            </strong>
+            <pre><code class="hljs">
+                lock_acquire(foo_lock) ;
+                // modify foo
+                lock_release(foo_lock) ;
+              </code></pre>
+            <ul class="container">
+              <li class="col-6">True</li>
+              <li class="col-6">False</li>
+            </ul>
+            <div class="fragment">False</div>
+          </section>
           <section>
             <h3 class="fragment fade-up">
               <small>Question #1</small><br />
